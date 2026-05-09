@@ -1,0 +1,99 @@
+﻿<Window x:Class="Kibernum_SJCC.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestión de Usuarios - Kibernum" Height="650" Width="900" WindowStartupLocation="CenterScreen" Icon="/Views/id-card-clip-alt_9856425.png">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <GroupBox Header="Datos del Usuario" Margin="0,0,0,15" Padding="10">
+            <StackPanel>
+                <UniformGrid Columns="2">
+                    <StackPanel Margin="5">
+                        <Label Content="Nombre(s):"/>
+                        <TextBox Text="{Binding Nombre, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding EsEdicion}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Apellido(s):"/>
+                        <TextBox Text="{Binding Apellido, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding EsEdicion}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Correo:"/>
+                        <TextBox Text="{Binding Correo, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Teléfono:"/>
+                        <TextBox Text="{Binding Telefono, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Área:"/>
+                        <ComboBox ItemsSource="{Binding Areas}" 
+                                  DisplayMemberPath="Nombre" 
+                                  SelectedValuePath="IdArea" 
+                                  SelectedValue="{Binding IdArea}"/>
+                        <Button Content="⚙️" 
+                                Width="35" 
+                                Height="25" 
+                                Padding="0" 
+                                VerticalContentAlignment="Center" 
+                                HorizontalContentAlignment="Center" 
+                                Click="btnGestionAreas_Click" 
+                                Margin="5,0,0,0"/>
+                    </StackPanel>
+                    
+                    <StackPanel Margin="5">
+                        <Label Content="Rol:"/>
+                        <ComboBox ItemsSource="{Binding Roles}" 
+                                  DisplayMemberPath="Nombre" 
+                                  SelectedValuePath="IdRol" 
+                                  SelectedValue="{Binding IdRol}"/>
+                    </StackPanel>
+                </UniformGrid>
+                <StackPanel Margin="5" VerticalAlignment="Center">
+                    <Label Content="Estado:"/>
+                    <CheckBox Content="Activo [S/N]?" 
+              IsChecked="{Binding Activo, UpdateSourceTrigger=PropertyChanged}" 
+              Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,5,5">                    
+                    <Button x:Name="btnLimpiar" 
+                            Content="Nuevo / Limpiar" 
+                            Width="120" 
+                            Height="30" 
+                            Margin="0,0,10,0" 
+                            Click="btnLimpiar_Click"/>
+                    <Button Content="Guardar" 
+                            Command="{Binding GuardarCommand}"
+                            Background="{StaticResource VerdeKibernum}" 
+                            Foreground="White" 
+                            FontWeight="Bold"
+                            Width="120" Height="30"
+                            Click="btnGuardar_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Listado de Usuarios (Últimos 10)" Grid.Row="1">
+            <DataGrid x:Name="dgUsuarios" 
+                      ItemsSource="{Binding Usuarios}" 
+                      SelectedItem="{Binding UsuarioSeleccionado}" 
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      SelectionMode="Single"
+                      Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"/>
+                    <DataGridTextColumn Header="Apellido" Binding="{Binding Apellido}" Width="*"/>
+                    <DataGridTextColumn Header="Correo" Binding="{Binding Correo}" Width="1.5*"/>
+                    <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="*"/>
+                    <DataGridTextColumn Header="Área" Binding="{Binding Area}" Width="*"/>
+                    <DataGridTextColumn Header="Rol" Binding="{Binding Rol}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Activo" Binding="{Binding Activo}" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</Window>
